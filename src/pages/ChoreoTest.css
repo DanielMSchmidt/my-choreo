@@ -1,0 +1,20 @@
+.ChoreoTester {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.ChoreoTesterTiming {
+  border-radius: 5px;
+  border: 1px solid black;
+  cursor: pointer;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+.ScoreBoard {
+  position: fixed;
+  top: 3em;
+  left: 3em;
+  font-size: 2em;
+}

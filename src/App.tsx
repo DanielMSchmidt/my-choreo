@@ -4,6 +4,7 @@ import { Router } from "@reach/router";
 
 import CreateChoreoRedirect from "./pages/CreateChoreoRedirect";
 import ChoreoEditor from "./pages/ChoreoEditor";
+import ChoreoTest from "./pages/ChoreoTest";
 import getGraphQLClient from "./graphqlClient";
 
 import "./App.css";
@@ -21,6 +22,7 @@ const App: React.FC = () => {
         <Router>
           <CreateChoreoRedirect path="/" />
           <ChoreoEditor path="/choreo/:prefix/:id" />
+          <ChoreoTest path="/choreo/:prefix/:id/test" />
         </Router>
       </div>
     </ApolloProvider>
