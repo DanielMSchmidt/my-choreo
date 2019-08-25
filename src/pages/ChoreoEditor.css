@@ -9,3 +9,12 @@
   margin: 1rem;
   padding: 3rem;
 }
+
+.stepEditor.is-new {
+  border: 1px dashed black;
+}
+
+.stepSelection {
+  margin: 10px;
+  cursor: pointer;
+}

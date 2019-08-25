@@ -8,7 +8,7 @@ query steps($id: Int!, $prefix: String!) {
   }
 }
 
-mutation addStep($choreoId: Int!, $timing: Int!) {
+mutation addStep($choreoId: Int!, $timing: numeric!) {
   insert_step(objects: { choreo_id: $choreoId, timing: $timing }) {
     affected_rows
   }
