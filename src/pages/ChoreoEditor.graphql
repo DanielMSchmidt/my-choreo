@@ -1,0 +1,15 @@
+query steps($id: Int!, $prefix: String!) {
+  choreo(where: { id: { _eq: $id }, public_id_prefix: { _eq: $prefix } }) {
+    name
+    steps {
+      timing
+      comment
+    }
+  }
+}
+
+mutation addStep($choreoId: Int!, $timing: Int!) {
+  insert_step(objects: { choreo_id: $choreoId, timing: $timing }) {
+    affected_rows
+  }
+}

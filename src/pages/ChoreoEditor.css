@@ -1,0 +1,11 @@
+.choreoEditor {
+  display: flex;
+}
+
+.stepEditor {
+  border: 1px solid black;
+  border-radius: 5px;
+  flex-direction: row;
+  margin: 1rem;
+  padding: 3rem;
+}
