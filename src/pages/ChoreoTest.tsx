@@ -10,7 +10,6 @@ interface Step {
 }
 
 function ChoreoTester({ steps }: { steps: Timing[] }) {
-  console.log("Testing choreo", steps);
   const [writtenSteps, setWrittenSteps] = React.useState<Timing[]>([]);
   const [error, setError] = React.useState("");
   const [done, setDone] = React.useState(false);
@@ -31,12 +30,34 @@ function ChoreoTester({ steps }: { steps: Timing[] }) {
     setWrittenSteps([...writtenSteps, selectedStep]);
   };
 
+  const again = (
+    <span
+      onClick={() => {
+        setWrittenSteps([]);
+        setError("");
+        setDone(false);
+      }}
+    >
+      Again!
+    </span>
+  );
+
   if (done) {
-    return <h3>You made it!</h3>;
+    return (
+      <>
+        <h3>You made it!</h3>
+        {again}
+      </>
+    );
   }
 
   if (error !== "") {
-    return <h3>{error}</h3>;
+    return (
+      <>
+        <h3>{error}</h3>
+        {again}
+      </>
+    );
   }
 
   return (
