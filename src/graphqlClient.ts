@@ -21,7 +21,7 @@ function isSubscription({ query }: GraphQLRequest) {
 export default function getGraphQLClient() {
   const baseUrl = process.env.API_ORIGIN
     ? process.env.API_ORIGIN
-    : "http://my-choreo.herokuapp.com/v1/graphql";
+    : "https://my-choreo.herokuapp.com/v1/graphql";
 
   const fragmentMatcher = new IntrospectionFragmentMatcher({
     introspectionQueryResultData: introspectionResult
@@ -46,7 +46,7 @@ export default function getGraphQLClient() {
         isSubscription,
         new WebSocketLink({
           options: { reconnect: true },
-          uri: baseUrl.replace("http://", "ws://")
+          uri: baseUrl.replace("https://", "wss://")
         }),
         new HttpLink({
           credentials: "same-origin",
