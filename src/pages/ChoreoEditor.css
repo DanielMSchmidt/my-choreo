@@ -1,5 +1,8 @@
 .choreoEditor {
   display: flex;
+  max-width: 100vw;
+  overflow: scroll;
+  padding: 7em 0em;
 }
 
 .stepEditor {
