@@ -1,0 +1,8 @@
+mutation CreateChoreo($publicId: String!) {
+  insert_choreo(objects: { public_id_prefix: $publicId }) {
+    returning {
+      id
+      public_id_prefix
+    }
+  }
+}
