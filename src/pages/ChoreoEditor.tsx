@@ -37,12 +37,13 @@ function StepEditor({
   timing,
   previousTiming
 }: Step & { previousTiming: number | null }) {
-  const rhythm = 8;
+  // TODO: add rhythm properly
+  // const rhythm = 8;
   return (
     <div className="stepEditor">
       <span>{getTimingName(previousTiming, timing)}</span>
-      {" / "}
-      <span>{timing % rhythm}</span>
+      {/* {" / "}
+      <span>{timing % rhythm}</span> */}
     </div>
   );
 }
