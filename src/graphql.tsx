@@ -14,6 +14,7 @@ export type Scalars = {
   Int: number,
   Float: number,
   numeric: any,
+  timestamptz: any,
 };
 
 /** columns and relationships of "choreo" */
@@ -26,6 +27,10 @@ export type Choreo = {
   steps: Array<Step>,
   /** An aggregated array relationship */
   steps_aggregate: Step_Aggregate,
+  /** An array relationship */
+  tags: Array<Tag>,
+  /** An aggregated array relationship */
+  tags_aggregate: Tag_Aggregate,
 };
 
 
@@ -46,6 +51,26 @@ export type ChoreoSteps_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>,
   order_by?: Maybe<Array<Step_Order_By>>,
   where?: Maybe<Step_Bool_Exp>
+};
+
+
+/** columns and relationships of "choreo" */
+export type ChoreoTagsArgs = {
+  distinct_on?: Maybe<Array<Tag_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Tag_Order_By>>,
+  where?: Maybe<Tag_Bool_Exp>
+};
+
+
+/** columns and relationships of "choreo" */
+export type ChoreoTags_AggregateArgs = {
+  distinct_on?: Maybe<Array<Tag_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Tag_Order_By>>,
+  where?: Maybe<Tag_Bool_Exp>
 };
 
 /** aggregated selection of "choreo" */
@@ -119,6 +144,7 @@ export type Choreo_Bool_Exp = {
   name?: Maybe<Text_Comparison_Exp>,
   public_id_prefix?: Maybe<Text_Comparison_Exp>,
   steps?: Maybe<Step_Bool_Exp>,
+  tags?: Maybe<Tag_Bool_Exp>,
 };
 
 /** unique or primary key constraints on table "choreo" */
@@ -138,6 +164,7 @@ export type Choreo_Insert_Input = {
   name?: Maybe<Scalars['String']>,
   public_id_prefix?: Maybe<Scalars['String']>,
   steps?: Maybe<Step_Arr_Rel_Insert_Input>,
+  tags?: Maybe<Tag_Arr_Rel_Insert_Input>,
 };
 
 /** aggregate max on columns */
@@ -197,6 +224,7 @@ export type Choreo_Order_By = {
   name?: Maybe<Order_By>,
   public_id_prefix?: Maybe<Order_By>,
   steps_aggregate?: Maybe<Step_Aggregate_Order_By>,
+  tags_aggregate?: Maybe<Tag_Aggregate_Order_By>,
 };
 
 /** select columns of table "choreo" */
@@ -331,14 +359,20 @@ export type Mutation_Root = {
   delete_choreo?: Maybe<Choreo_Mutation_Response>,
   /** delete data from the table: "step" */
   delete_step?: Maybe<Step_Mutation_Response>,
+  /** delete data from the table: "tag" */
+  delete_tag?: Maybe<Tag_Mutation_Response>,
   /** insert data into the table: "choreo" */
   insert_choreo?: Maybe<Choreo_Mutation_Response>,
   /** insert data into the table: "step" */
   insert_step?: Maybe<Step_Mutation_Response>,
+  /** insert data into the table: "tag" */
+  insert_tag?: Maybe<Tag_Mutation_Response>,
   /** update data of the table: "choreo" */
   update_choreo?: Maybe<Choreo_Mutation_Response>,
   /** update data of the table: "step" */
   update_step?: Maybe<Step_Mutation_Response>,
+  /** update data of the table: "tag" */
+  update_tag?: Maybe<Tag_Mutation_Response>,
 };
 
 
@@ -351,6 +385,12 @@ export type Mutation_RootDelete_ChoreoArgs = {
 /** mutation root */
 export type Mutation_RootDelete_StepArgs = {
   where: Step_Bool_Exp
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_TagArgs = {
+  where: Tag_Bool_Exp
 };
 
 
@@ -369,6 +409,13 @@ export type Mutation_RootInsert_StepArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_TagArgs = {
+  objects: Array<Tag_Insert_Input>,
+  on_conflict?: Maybe<Tag_On_Conflict>
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_ChoreoArgs = {
   _inc?: Maybe<Choreo_Inc_Input>,
   _set?: Maybe<Choreo_Set_Input>,
@@ -381,6 +428,14 @@ export type Mutation_RootUpdate_StepArgs = {
   _inc?: Maybe<Step_Inc_Input>,
   _set?: Maybe<Step_Set_Input>,
   where: Step_Bool_Exp
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_TagArgs = {
+  _inc?: Maybe<Tag_Inc_Input>,
+  _set?: Maybe<Tag_Set_Input>,
+  where: Tag_Bool_Exp
 };
 
 
@@ -428,6 +483,12 @@ export type Query_Root = {
   step_aggregate: Step_Aggregate,
   /** fetch data from the table: "step" using primary key columns */
   step_by_pk?: Maybe<Step>,
+  /** fetch data from the table: "tag" */
+  tag: Array<Tag>,
+  /** fetch aggregated fields from the table: "tag" */
+  tag_aggregate: Tag_Aggregate,
+  /** fetch data from the table: "tag" using primary key columns */
+  tag_by_pk?: Maybe<Tag>,
 };
 
 
@@ -479,6 +540,32 @@ export type Query_RootStep_AggregateArgs = {
 
 /** query root */
 export type Query_RootStep_By_PkArgs = {
+  id: Scalars['Int']
+};
+
+
+/** query root */
+export type Query_RootTagArgs = {
+  distinct_on?: Maybe<Array<Tag_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Tag_Order_By>>,
+  where?: Maybe<Tag_Bool_Exp>
+};
+
+
+/** query root */
+export type Query_RootTag_AggregateArgs = {
+  distinct_on?: Maybe<Array<Tag_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Tag_Order_By>>,
+  where?: Maybe<Tag_Bool_Exp>
+};
+
+
+/** query root */
+export type Query_RootTag_By_PkArgs = {
   id: Scalars['Int']
 };
 
@@ -808,6 +895,12 @@ export type Subscription_Root = {
   step_aggregate: Step_Aggregate,
   /** fetch data from the table: "step" using primary key columns */
   step_by_pk?: Maybe<Step>,
+  /** fetch data from the table: "tag" */
+  tag: Array<Tag>,
+  /** fetch aggregated fields from the table: "tag" */
+  tag_aggregate: Tag_Aggregate,
+  /** fetch data from the table: "tag" using primary key columns */
+  tag_by_pk?: Maybe<Tag>,
 };
 
 
@@ -862,6 +955,419 @@ export type Subscription_RootStep_By_PkArgs = {
   id: Scalars['Int']
 };
 
+
+/** subscription root */
+export type Subscription_RootTagArgs = {
+  distinct_on?: Maybe<Array<Tag_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Tag_Order_By>>,
+  where?: Maybe<Tag_Bool_Exp>
+};
+
+
+/** subscription root */
+export type Subscription_RootTag_AggregateArgs = {
+  distinct_on?: Maybe<Array<Tag_Select_Column>>,
+  limit?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  order_by?: Maybe<Array<Tag_Order_By>>,
+  where?: Maybe<Tag_Bool_Exp>
+};
+
+
+/** subscription root */
+export type Subscription_RootTag_By_PkArgs = {
+  id: Scalars['Int']
+};
+
+/** columns and relationships of "tag" */
+export type Tag = {
+  __typename?: 'tag',
+  choreo_id: Scalars['Int'],
+  color: Scalars['String'],
+  content: Scalars['String'],
+  created_at: Scalars['timestamptz'],
+  id: Scalars['Int'],
+  timing_end: Scalars['numeric'],
+  timing_start: Scalars['numeric'],
+  title: Scalars['String'],
+  type: Scalars['String'],
+};
+
+/** aggregated selection of "tag" */
+export type Tag_Aggregate = {
+  __typename?: 'tag_aggregate',
+  aggregate?: Maybe<Tag_Aggregate_Fields>,
+  nodes: Array<Tag>,
+};
+
+/** aggregate fields of "tag" */
+export type Tag_Aggregate_Fields = {
+  __typename?: 'tag_aggregate_fields',
+  avg?: Maybe<Tag_Avg_Fields>,
+  count?: Maybe<Scalars['Int']>,
+  max?: Maybe<Tag_Max_Fields>,
+  min?: Maybe<Tag_Min_Fields>,
+  stddev?: Maybe<Tag_Stddev_Fields>,
+  stddev_pop?: Maybe<Tag_Stddev_Pop_Fields>,
+  stddev_samp?: Maybe<Tag_Stddev_Samp_Fields>,
+  sum?: Maybe<Tag_Sum_Fields>,
+  var_pop?: Maybe<Tag_Var_Pop_Fields>,
+  var_samp?: Maybe<Tag_Var_Samp_Fields>,
+  variance?: Maybe<Tag_Variance_Fields>,
+};
+
+
+/** aggregate fields of "tag" */
+export type Tag_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Tag_Select_Column>>,
+  distinct?: Maybe<Scalars['Boolean']>
+};
+
+/** order by aggregate values of table "tag" */
+export type Tag_Aggregate_Order_By = {
+  avg?: Maybe<Tag_Avg_Order_By>,
+  count?: Maybe<Order_By>,
+  max?: Maybe<Tag_Max_Order_By>,
+  min?: Maybe<Tag_Min_Order_By>,
+  stddev?: Maybe<Tag_Stddev_Order_By>,
+  stddev_pop?: Maybe<Tag_Stddev_Pop_Order_By>,
+  stddev_samp?: Maybe<Tag_Stddev_Samp_Order_By>,
+  sum?: Maybe<Tag_Sum_Order_By>,
+  var_pop?: Maybe<Tag_Var_Pop_Order_By>,
+  var_samp?: Maybe<Tag_Var_Samp_Order_By>,
+  variance?: Maybe<Tag_Variance_Order_By>,
+};
+
+/** input type for inserting array relation for remote table "tag" */
+export type Tag_Arr_Rel_Insert_Input = {
+  data: Array<Tag_Insert_Input>,
+  on_conflict?: Maybe<Tag_On_Conflict>,
+};
+
+/** aggregate avg on columns */
+export type Tag_Avg_Fields = {
+  __typename?: 'tag_avg_fields',
+  choreo_id?: Maybe<Scalars['Float']>,
+  id?: Maybe<Scalars['Float']>,
+  timing_end?: Maybe<Scalars['Float']>,
+  timing_start?: Maybe<Scalars['Float']>,
+};
+
+/** order by avg() on columns of table "tag" */
+export type Tag_Avg_Order_By = {
+  choreo_id?: Maybe<Order_By>,
+  id?: Maybe<Order_By>,
+  timing_end?: Maybe<Order_By>,
+  timing_start?: Maybe<Order_By>,
+};
+
+/** Boolean expression to filter rows from the table "tag". All fields are combined with a logical 'AND'. */
+export type Tag_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Tag_Bool_Exp>>>,
+  _not?: Maybe<Tag_Bool_Exp>,
+  _or?: Maybe<Array<Maybe<Tag_Bool_Exp>>>,
+  choreo_id?: Maybe<Integer_Comparison_Exp>,
+  color?: Maybe<Text_Comparison_Exp>,
+  content?: Maybe<Text_Comparison_Exp>,
+  created_at?: Maybe<Timestamptz_Comparison_Exp>,
+  id?: Maybe<Integer_Comparison_Exp>,
+  timing_end?: Maybe<Numeric_Comparison_Exp>,
+  timing_start?: Maybe<Numeric_Comparison_Exp>,
+  title?: Maybe<Text_Comparison_Exp>,
+  type?: Maybe<Text_Comparison_Exp>,
+};
+
+/** unique or primary key constraints on table "tag" */
+export enum Tag_Constraint {
+  /** unique or primary key constraint */
+  TagPkey = 'tag_pkey'
+}
+
+/** input type for incrementing integer columne in table "tag" */
+export type Tag_Inc_Input = {
+  choreo_id?: Maybe<Scalars['Int']>,
+  id?: Maybe<Scalars['Int']>,
+};
+
+/** input type for inserting data into table "tag" */
+export type Tag_Insert_Input = {
+  choreo_id?: Maybe<Scalars['Int']>,
+  color?: Maybe<Scalars['String']>,
+  content?: Maybe<Scalars['String']>,
+  created_at?: Maybe<Scalars['timestamptz']>,
+  id?: Maybe<Scalars['Int']>,
+  timing_end?: Maybe<Scalars['numeric']>,
+  timing_start?: Maybe<Scalars['numeric']>,
+  title?: Maybe<Scalars['String']>,
+  type?: Maybe<Scalars['String']>,
+};
+
+/** aggregate max on columns */
+export type Tag_Max_Fields = {
+  __typename?: 'tag_max_fields',
+  choreo_id?: Maybe<Scalars['Int']>,
+  color?: Maybe<Scalars['String']>,
+  content?: Maybe<Scalars['String']>,
+  created_at?: Maybe<Scalars['timestamptz']>,
+  id?: Maybe<Scalars['Int']>,
+  timing_end?: Maybe<Scalars['numeric']>,
+  timing_start?: Maybe<Scalars['numeric']>,
+  title?: Maybe<Scalars['String']>,
+  type?: Maybe<Scalars['String']>,
+};
+
+/** order by max() on columns of table "tag" */
+export type Tag_Max_Order_By = {
+  choreo_id?: Maybe<Order_By>,
+  color?: Maybe<Order_By>,
+  content?: Maybe<Order_By>,
+  created_at?: Maybe<Order_By>,
+  id?: Maybe<Order_By>,
+  timing_end?: Maybe<Order_By>,
+  timing_start?: Maybe<Order_By>,
+  title?: Maybe<Order_By>,
+  type?: Maybe<Order_By>,
+};
+
+/** aggregate min on columns */
+export type Tag_Min_Fields = {
+  __typename?: 'tag_min_fields',
+  choreo_id?: Maybe<Scalars['Int']>,
+  color?: Maybe<Scalars['String']>,
+  content?: Maybe<Scalars['String']>,
+  created_at?: Maybe<Scalars['timestamptz']>,
+  id?: Maybe<Scalars['Int']>,
+  timing_end?: Maybe<Scalars['numeric']>,
+  timing_start?: Maybe<Scalars['numeric']>,
+  title?: Maybe<Scalars['String']>,
+  type?: Maybe<Scalars['String']>,
+};
+
+/** order by min() on columns of table "tag" */
+export type Tag_Min_Order_By = {
+  choreo_id?: Maybe<Order_By>,
+  color?: Maybe<Order_By>,
+  content?: Maybe<Order_By>,
+  created_at?: Maybe<Order_By>,
+  id?: Maybe<Order_By>,
+  timing_end?: Maybe<Order_By>,
+  timing_start?: Maybe<Order_By>,
+  title?: Maybe<Order_By>,
+  type?: Maybe<Order_By>,
+};
+
+/** response of any mutation on the table "tag" */
+export type Tag_Mutation_Response = {
+  __typename?: 'tag_mutation_response',
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'],
+  /** data of the affected rows by the mutation */
+  returning: Array<Tag>,
+};
+
+/** input type for inserting object relation for remote table "tag" */
+export type Tag_Obj_Rel_Insert_Input = {
+  data: Tag_Insert_Input,
+  on_conflict?: Maybe<Tag_On_Conflict>,
+};
+
+/** on conflict condition type for table "tag" */
+export type Tag_On_Conflict = {
+  constraint: Tag_Constraint,
+  update_columns: Array<Tag_Update_Column>,
+};
+
+/** ordering options when selecting data from "tag" */
+export type Tag_Order_By = {
+  choreo_id?: Maybe<Order_By>,
+  color?: Maybe<Order_By>,
+  content?: Maybe<Order_By>,
+  created_at?: Maybe<Order_By>,
+  id?: Maybe<Order_By>,
+  timing_end?: Maybe<Order_By>,
+  timing_start?: Maybe<Order_By>,
+  title?: Maybe<Order_By>,
+  type?: Maybe<Order_By>,
+};
+
+/** select columns of table "tag" */
+export enum Tag_Select_Column {
+  /** column name */
+  ChoreoId = 'choreo_id',
+  /** column name */
+  Color = 'color',
+  /** column name */
+  Content = 'content',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  TimingEnd = 'timing_end',
+  /** column name */
+  TimingStart = 'timing_start',
+  /** column name */
+  Title = 'title',
+  /** column name */
+  Type = 'type'
+}
+
+/** input type for updating data in table "tag" */
+export type Tag_Set_Input = {
+  choreo_id?: Maybe<Scalars['Int']>,
+  color?: Maybe<Scalars['String']>,
+  content?: Maybe<Scalars['String']>,
+  created_at?: Maybe<Scalars['timestamptz']>,
+  id?: Maybe<Scalars['Int']>,
+  timing_end?: Maybe<Scalars['numeric']>,
+  timing_start?: Maybe<Scalars['numeric']>,
+  title?: Maybe<Scalars['String']>,
+  type?: Maybe<Scalars['String']>,
+};
+
+/** aggregate stddev on columns */
+export type Tag_Stddev_Fields = {
+  __typename?: 'tag_stddev_fields',
+  choreo_id?: Maybe<Scalars['Float']>,
+  id?: Maybe<Scalars['Float']>,
+  timing_end?: Maybe<Scalars['Float']>,
+  timing_start?: Maybe<Scalars['Float']>,
+};
+
+/** order by stddev() on columns of table "tag" */
+export type Tag_Stddev_Order_By = {
+  choreo_id?: Maybe<Order_By>,
+  id?: Maybe<Order_By>,
+  timing_end?: Maybe<Order_By>,
+  timing_start?: Maybe<Order_By>,
+};
+
+/** aggregate stddev_pop on columns */
+export type Tag_Stddev_Pop_Fields = {
+  __typename?: 'tag_stddev_pop_fields',
+  choreo_id?: Maybe<Scalars['Float']>,
+  id?: Maybe<Scalars['Float']>,
+  timing_end?: Maybe<Scalars['Float']>,
+  timing_start?: Maybe<Scalars['Float']>,
+};
+
+/** order by stddev_pop() on columns of table "tag" */
+export type Tag_Stddev_Pop_Order_By = {
+  choreo_id?: Maybe<Order_By>,
+  id?: Maybe<Order_By>,
+  timing_end?: Maybe<Order_By>,
+  timing_start?: Maybe<Order_By>,
+};
+
+/** aggregate stddev_samp on columns */
+export type Tag_Stddev_Samp_Fields = {
+  __typename?: 'tag_stddev_samp_fields',
+  choreo_id?: Maybe<Scalars['Float']>,
+  id?: Maybe<Scalars['Float']>,
+  timing_end?: Maybe<Scalars['Float']>,
+  timing_start?: Maybe<Scalars['Float']>,
+};
+
+/** order by stddev_samp() on columns of table "tag" */
+export type Tag_Stddev_Samp_Order_By = {
+  choreo_id?: Maybe<Order_By>,
+  id?: Maybe<Order_By>,
+  timing_end?: Maybe<Order_By>,
+  timing_start?: Maybe<Order_By>,
+};
+
+/** aggregate sum on columns */
+export type Tag_Sum_Fields = {
+  __typename?: 'tag_sum_fields',
+  choreo_id?: Maybe<Scalars['Int']>,
+  id?: Maybe<Scalars['Int']>,
+  timing_end?: Maybe<Scalars['numeric']>,
+  timing_start?: Maybe<Scalars['numeric']>,
+};
+
+/** order by sum() on columns of table "tag" */
+export type Tag_Sum_Order_By = {
+  choreo_id?: Maybe<Order_By>,
+  id?: Maybe<Order_By>,
+  timing_end?: Maybe<Order_By>,
+  timing_start?: Maybe<Order_By>,
+};
+
+/** update columns of table "tag" */
+export enum Tag_Update_Column {
+  /** column name */
+  ChoreoId = 'choreo_id',
+  /** column name */
+  Color = 'color',
+  /** column name */
+  Content = 'content',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  TimingEnd = 'timing_end',
+  /** column name */
+  TimingStart = 'timing_start',
+  /** column name */
+  Title = 'title',
+  /** column name */
+  Type = 'type'
+}
+
+/** aggregate var_pop on columns */
+export type Tag_Var_Pop_Fields = {
+  __typename?: 'tag_var_pop_fields',
+  choreo_id?: Maybe<Scalars['Float']>,
+  id?: Maybe<Scalars['Float']>,
+  timing_end?: Maybe<Scalars['Float']>,
+  timing_start?: Maybe<Scalars['Float']>,
+};
+
+/** order by var_pop() on columns of table "tag" */
+export type Tag_Var_Pop_Order_By = {
+  choreo_id?: Maybe<Order_By>,
+  id?: Maybe<Order_By>,
+  timing_end?: Maybe<Order_By>,
+  timing_start?: Maybe<Order_By>,
+};
+
+/** aggregate var_samp on columns */
+export type Tag_Var_Samp_Fields = {
+  __typename?: 'tag_var_samp_fields',
+  choreo_id?: Maybe<Scalars['Float']>,
+  id?: Maybe<Scalars['Float']>,
+  timing_end?: Maybe<Scalars['Float']>,
+  timing_start?: Maybe<Scalars['Float']>,
+};
+
+/** order by var_samp() on columns of table "tag" */
+export type Tag_Var_Samp_Order_By = {
+  choreo_id?: Maybe<Order_By>,
+  id?: Maybe<Order_By>,
+  timing_end?: Maybe<Order_By>,
+  timing_start?: Maybe<Order_By>,
+};
+
+/** aggregate variance on columns */
+export type Tag_Variance_Fields = {
+  __typename?: 'tag_variance_fields',
+  choreo_id?: Maybe<Scalars['Float']>,
+  id?: Maybe<Scalars['Float']>,
+  timing_end?: Maybe<Scalars['Float']>,
+  timing_start?: Maybe<Scalars['Float']>,
+};
+
+/** order by variance() on columns of table "tag" */
+export type Tag_Variance_Order_By = {
+  choreo_id?: Maybe<Order_By>,
+  id?: Maybe<Order_By>,
+  timing_end?: Maybe<Order_By>,
+  timing_start?: Maybe<Order_By>,
+};
+
 /** expression to compare columns of type text. All fields are combined with logical 'AND'. */
 export type Text_Comparison_Exp = {
   _eq?: Maybe<Scalars['String']>,
@@ -880,6 +1386,20 @@ export type Text_Comparison_Exp = {
   _nsimilar?: Maybe<Scalars['String']>,
   _similar?: Maybe<Scalars['String']>,
 };
+
+
+/** expression to compare columns of type timestamptz. All fields are combined with logical 'AND'. */
+export type Timestamptz_Comparison_Exp = {
+  _eq?: Maybe<Scalars['timestamptz']>,
+  _gt?: Maybe<Scalars['timestamptz']>,
+  _gte?: Maybe<Scalars['timestamptz']>,
+  _in?: Maybe<Array<Scalars['timestamptz']>>,
+  _is_null?: Maybe<Scalars['Boolean']>,
+  _lt?: Maybe<Scalars['timestamptz']>,
+  _lte?: Maybe<Scalars['timestamptz']>,
+  _neq?: Maybe<Scalars['timestamptz']>,
+  _nin?: Maybe<Array<Scalars['timestamptz']>>,
+};
 export type StepsQueryVariables = {
   id: Scalars['Int'],
   prefix: Scalars['String']
@@ -893,7 +1413,10 @@ export type StepsQuery = (
     & Pick<Choreo, 'name'>
     & { steps: Array<(
       { __typename?: 'step' }
-      & Pick<Step, 'timing' | 'comment'>
+      & Pick<Step, 'comment' | 'timing'>
+    )>, tags: Array<(
+      { __typename?: 'tag' }
+      & Pick<Tag, 'color' | 'content' | 'timing_end' | 'timing_start' | 'title' | 'type'>
     )> }
   )> }
 );
@@ -909,6 +1432,24 @@ export type AddStepMutation = (
   & { insert_step: Maybe<(
     { __typename?: 'step_mutation_response' }
     & Pick<Step_Mutation_Response, 'affected_rows'>
+  )> }
+);
+
+export type AddFigureMutationVariables = {
+  choreoId: Scalars['Int'],
+  timing_start: Scalars['numeric'],
+  timing_end: Scalars['numeric'],
+  title: Scalars['String'],
+  content: Scalars['String'],
+  color: Scalars['String']
+};
+
+
+export type AddFigureMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_tag: Maybe<(
+    { __typename?: 'tag_mutation_response' }
+    & Pick<Tag_Mutation_Response, 'affected_rows'>
   )> }
 );
 
@@ -933,8 +1474,16 @@ export const StepsDocument = gql`
   choreo(where: {id: {_eq: $id}, public_id_prefix: {_eq: $prefix}}) {
     name
     steps {
-      timing
       comment
+      timing
+    }
+    tags {
+      color
+      content
+      timing_end
+      timing_start
+      title
+      type
     }
   }
 }
@@ -998,6 +1547,38 @@ export function withAddStep<TProps, TChildProps = {}>(operationOptions?: ApolloR
 export type AddStepMutationHookResult = ReturnType<typeof useAddStepMutation>;
 export type AddStepMutationResult = ApolloReactCommon.MutationResult<AddStepMutation>;
 export type AddStepMutationOptions = ApolloReactCommon.BaseMutationOptions<AddStepMutation, AddStepMutationVariables>;
+export const AddFigureDocument = gql`
+    mutation addFigure($choreoId: Int!, $timing_start: numeric!, $timing_end: numeric!, $title: String!, $content: String!, $color: String!) {
+  insert_tag(objects: {content: $content, color: $color, choreo_id: $choreoId, title: $title, type: "Figure", timing_start: $timing_start, timing_end: $timing_end}) {
+    affected_rows
+  }
+}
+    `;
+export type AddFigureMutationFn = ApolloReactCommon.MutationFunction<AddFigureMutation, AddFigureMutationVariables>;
+export type AddFigureComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<AddFigureMutation, AddFigureMutationVariables>, 'mutation'>;
+
+    export const AddFigureComponent = (props: AddFigureComponentProps) => (
+      <ApolloReactComponents.Mutation<AddFigureMutation, AddFigureMutationVariables> mutation={AddFigureDocument} {...props} />
+    );
+    
+export type AddFigureProps<TChildProps = {}> = ApolloReactHoc.MutateProps<AddFigureMutation, AddFigureMutationVariables> & TChildProps;
+export function withAddFigure<TProps, TChildProps = {}>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  AddFigureMutation,
+  AddFigureMutationVariables,
+  AddFigureProps<TChildProps>>) {
+    return ApolloReactHoc.withMutation<TProps, AddFigureMutation, AddFigureMutationVariables, AddFigureProps<TChildProps>>(AddFigureDocument, {
+      alias: 'withAddFigure',
+      ...operationOptions
+    });
+};
+
+    export function useAddFigureMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddFigureMutation, AddFigureMutationVariables>) {
+      return ApolloReactHooks.useMutation<AddFigureMutation, AddFigureMutationVariables>(AddFigureDocument, baseOptions);
+    };
+export type AddFigureMutationHookResult = ReturnType<typeof useAddFigureMutation>;
+export type AddFigureMutationResult = ApolloReactCommon.MutationResult<AddFigureMutation>;
+export type AddFigureMutationOptions = ApolloReactCommon.BaseMutationOptions<AddFigureMutation, AddFigureMutationVariables>;
 export const CreateChoreoDocument = gql`
     mutation CreateChoreo($publicId: String!) {
   insert_choreo(objects: {public_id_prefix: $publicId}) {

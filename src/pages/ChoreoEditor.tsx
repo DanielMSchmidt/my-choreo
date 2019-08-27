@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "@reach/router";
+import TooltipTrigger from "react-popper-tooltip";
 
 import Loading from "../components/Loading";
 import { StepsComponent, useAddStepMutation } from "../graphql";
@@ -12,22 +13,55 @@ type Step = {
   timing: number;
 };
 
+type Tag = {
+  type: string;
+  title: string;
+  color: string;
+  timing_start: number;
+  timing_end: number;
+};
+
 function StepEditor({
   timing,
-  previousTiming
-}: Step & { previousTiming: number | null }) {
+  previousTiming,
+  figure
+}: Step & { previousTiming: number | null; figure?: Tag }) {
   // TODO: add rhythm properly
   // const rhythm = 8;
+
   return (
-    <div className="stepEditor">
-      <span>
-        {lengthToTiming(
-          timing - (previousTiming === null ? 0 : previousTiming)
-        )}
-      </span>
-      {/* {" / "}
+    <TooltipTrigger
+      placement="top"
+      trigger="hover"
+      tooltip={({ tooltipRef, getTooltipProps }) => (
+        <div
+          {...getTooltipProps({
+            className: "tooltip-container",
+            ref: tooltipRef
+          })}
+        >
+          {figure ? figure.title : undefined}
+        </div>
+      )}
+    >
+      {({ triggerRef, getTriggerProps }) => (
+        <div
+          {...getTriggerProps({
+            ref: triggerRef
+          })}
+          className="stepEditor"
+          style={{ backgroundColor: figure ? figure.color : "#FFF" }}
+        >
+          <span>
+            {lengthToTiming(
+              timing - (previousTiming === null ? 0 : previousTiming)
+            )}
+          </span>
+          {/* {" / "}
       <span>{timing % rhythm}</span> */}
-    </div>
+        </div>
+      )}
+    </TooltipTrigger>
   );
 }
 
@@ -64,13 +98,17 @@ function NewStep({
 
 function ChoreoEditor({
   steps,
+  tags,
   choreoId,
   refetch
 }: {
   steps: Step[];
+  tags: Tag[];
   choreoId: number;
   refetch: () => void;
 }) {
+  const figures = tags.filter(tag => tag.type === "Figure");
+
   return (
     <>
       <div className="choreoEditor">
@@ -78,6 +116,10 @@ function ChoreoEditor({
           <StepEditor
             key={step.timing}
             {...step}
+            figure={figures.find(
+              tag =>
+                tag.timing_start <= step.timing && step.timing <= tag.timing_end
+            )}
             previousTiming={index === 0 ? null : steps[index - 1].timing}
           />
         ))}
@@ -116,6 +158,7 @@ export default function Choreo({
             <ChoreoEditor
               refetch={() => refetch()}
               steps={choreo.steps}
+              tags={choreo.tags}
               choreoId={id}
             />
           );
