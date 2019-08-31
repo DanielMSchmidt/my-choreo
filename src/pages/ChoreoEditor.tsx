@@ -3,10 +3,17 @@ import { Link } from "@reach/router";
 import TooltipTrigger from "react-popper-tooltip";
 
 import Loading from "../components/Loading";
-import { StepsComponent, useAddStepMutation } from "../graphql";
+import {
+  StepsComponent,
+  useAddStepMutation,
+  useAddFigureMutation
+} from "../graphql";
 
 import "./ChoreoEditor.css";
 import { lengthToTiming, Timing, timingToLength } from "../types/timing";
+
+const randomColor = () =>
+  "#" + Math.round(0xffffff * Math.random()).toString(16);
 
 type Step = {
   comment?: string | null;
@@ -107,6 +114,9 @@ function ChoreoEditor({
   choreoId: number;
   refetch: () => void;
 }) {
+  const [addFigure] = useAddFigureMutation();
+  const [createFigureMode, setCreateFigure] = React.useState(false);
+  const [figureStart, setFigureStart] = React.useState<number | null>(null);
   const figures = tags.filter(tag => tag.type === "Figure");
 
   return (
@@ -117,19 +127,63 @@ function ChoreoEditor({
           choreoId={choreoId}
           refetch={refetch}
         />
+        {createFigureMode ? (
+          <span
+            onClick={() => {
+              setCreateFigure(false);
+              setFigureStart(null);
+            }}
+          >
+            Stop
+          </span>
+        ) : (
+          <span onClick={() => setCreateFigure(true)}>Start</span>
+        )}
       </div>
 
       <div className="choreoEditor">
         {steps.map((step, index) => (
-          <StepEditor
+          <div
             key={step.timing}
-            {...step}
-            figure={figures.find(
-              tag =>
-                tag.timing_start <= step.timing && step.timing <= tag.timing_end
-            )}
-            previousTiming={index === 0 ? null : steps[index - 1].timing}
-          />
+            onClick={
+              createFigureMode
+                ? figureStart === null
+                  ? () => setFigureStart(step.timing)
+                  : () => {
+                      const name = prompt("How is this figure called?");
+                      if (!figureStart || !name) {
+                        return;
+                      }
+
+                      addFigure({
+                        variables: {
+                          choreoId,
+                          color: randomColor(),
+                          content: "",
+                          title: name,
+                          timing_end: step.timing,
+                          timing_start: figureStart
+                        }
+                      }).then(() => {
+                        setCreateFigure(false);
+                        setFigureStart(null);
+                        refetch();
+                      });
+                    }
+                : undefined
+            }
+          >
+            <StepEditor
+              key={step.timing}
+              {...step}
+              figure={figures.find(
+                tag =>
+                  tag.timing_start <= step.timing &&
+                  step.timing <= tag.timing_end
+              )}
+              previousTiming={index === 0 ? null : steps[index - 1].timing}
+            />
+          </div>
         ))}
       </div>
 
