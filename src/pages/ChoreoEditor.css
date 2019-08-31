@@ -23,3 +23,7 @@
   margin: 10px;
   cursor: pointer;
 }
+
+.actions {
+  display: flex;
+}

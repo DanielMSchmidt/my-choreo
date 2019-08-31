@@ -11,6 +11,7 @@ import {
 
 import "./ChoreoEditor.css";
 import { lengthToTiming, Timing, timingToLength } from "../types/timing";
+import { Button } from "../components/Button";
 
 const randomColor = () =>
   "#" + Math.round(0xffffff * Math.random()).toString(16);
@@ -114,10 +115,11 @@ function TagFigure({
 }) {
   return (
     <div>
+      <h3>Tag steps as a figure</h3>
       {createFigureMode ? (
-        <span onClick={reset}>Stop</span>
+        <Button onClick={reset}>Stop</Button>
       ) : (
-        <span onClick={start}>Start</span>
+        <Button onClick={start}>Start</Button>
       )}
     </div>
   );
