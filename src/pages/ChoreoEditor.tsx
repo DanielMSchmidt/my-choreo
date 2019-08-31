@@ -111,6 +111,14 @@ function ChoreoEditor({
 
   return (
     <>
+      <div className="actions">
+        <NewStep
+          previousTiming={steps.length ? steps[steps.length - 1].timing : 0}
+          choreoId={choreoId}
+          refetch={refetch}
+        />
+      </div>
+
       <div className="choreoEditor">
         {steps.map((step, index) => (
           <StepEditor
@@ -123,11 +131,6 @@ function ChoreoEditor({
             previousTiming={index === 0 ? null : steps[index - 1].timing}
           />
         ))}
-        <NewStep
-          previousTiming={steps.length ? steps[steps.length - 1].timing : 0}
-          choreoId={choreoId}
-          refetch={refetch}
-        />
       </div>
 
       <div>

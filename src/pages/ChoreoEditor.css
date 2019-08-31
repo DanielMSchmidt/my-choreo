@@ -12,6 +12,7 @@
   flex-direction: row;
   margin: 1rem;
   padding: 3rem;
+  max-width: 12em;
 }
 
 .stepEditor.is-new {
