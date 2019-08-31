@@ -115,7 +115,11 @@ function TagFigure({
 }) {
   return (
     <div>
-      <h3>Tag steps as a figure</h3>
+      <h3>
+        {createFigureMode
+          ? "Click on the first and last step"
+          : "Tag steps as a figure"}
+      </h3>
       {createFigureMode ? (
         <Button onClick={reset}>Stop</Button>
       ) : (
