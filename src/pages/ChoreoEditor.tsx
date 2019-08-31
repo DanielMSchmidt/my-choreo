@@ -103,6 +103,26 @@ function NewStep({
   );
 }
 
+function TagFigure({
+  createFigureMode,
+  reset,
+  start
+}: {
+  createFigureMode: Boolean;
+  reset: () => void;
+  start: () => void;
+}) {
+  return (
+    <div>
+      {createFigureMode ? (
+        <span onClick={reset}>Stop</span>
+      ) : (
+        <span onClick={start}>Start</span>
+      )}
+    </div>
+  );
+}
+
 function ChoreoEditor({
   steps,
   tags,
@@ -119,6 +139,11 @@ function ChoreoEditor({
   const [figureStart, setFigureStart] = React.useState<number | null>(null);
   const figures = tags.filter(tag => tag.type === "Figure");
 
+  const reset = () => {
+    setCreateFigure(false);
+    setFigureStart(null);
+  };
+
   return (
     <>
       <div className="actions">
@@ -127,18 +152,12 @@ function ChoreoEditor({
           choreoId={choreoId}
           refetch={refetch}
         />
-        {createFigureMode ? (
-          <span
-            onClick={() => {
-              setCreateFigure(false);
-              setFigureStart(null);
-            }}
-          >
-            Stop
-          </span>
-        ) : (
-          <span onClick={() => setCreateFigure(true)}>Start</span>
-        )}
+
+        <TagFigure
+          createFigureMode={createFigureMode}
+          reset={reset}
+          start={() => setCreateFigure(true)}
+        />
       </div>
 
       <div className="choreoEditor">
