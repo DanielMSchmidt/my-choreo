@@ -14,6 +14,7 @@ import { lengthToTiming, Timing, timingToLength } from "../types/timing";
 import { Button } from "../components/Button";
 import Header from "../components/Header";
 import EditableHeader from "../components/EditableHeader";
+import SetDance from "../components/SetDance";
 
 const randomColor = () =>
   "#" + Math.round(0xffffff * Math.random()).toString(16);
@@ -139,11 +140,13 @@ function ChoreoEditor({
   steps,
   tags,
   choreoId,
+  danceName,
   refetch
 }: {
   steps: Step[];
   tags: Tag[];
   choreoId: number;
+  danceName: string;
   refetch: () => void;
 }) {
   const editorRef = React.useRef<React.RefObject<HTMLDivElement>>(null);
@@ -168,6 +171,18 @@ function ChoreoEditor({
   return (
     <>
       <div className="actions">
+        <SetDance
+          choreoId={choreoId}
+          danceName={danceName}
+          availableDances={[
+            { name: "Waltz", phrase: 6 },
+            { name: "Tango", phrase: 8 },
+            { name: "Viennese Waltz", phrase: 6 },
+            { name: "Slowfox", phrase: 8 },
+            { name: "Quickstep", phrase: 8 }
+          ]}
+        />
+
         <NewStep
           previousTiming={steps.length ? steps[steps.length - 1].timing : 0}
           choreoId={choreoId}
@@ -267,6 +282,7 @@ export default function Choreo({
               <ChoreoEditor
                 refetch={() => refetch()}
                 steps={choreo.steps}
+                danceName={choreo.danceName || "Waltz"}
                 tags={choreo.tags}
                 choreoId={id}
               />

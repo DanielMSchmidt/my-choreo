@@ -1,6 +1,9 @@
 query steps($id: Int!, $prefix: String!) {
   choreo(where: { id: { _eq: $id }, public_id_prefix: { _eq: $prefix } }) {
     name
+    danceName
+    dancePhrase
+
     steps {
       comment
       timing

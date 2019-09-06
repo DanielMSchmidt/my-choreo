@@ -20,6 +20,8 @@ export type Scalars = {
 /** columns and relationships of "choreo" */
 export type Choreo = {
   __typename?: 'choreo',
+  danceName?: Maybe<Scalars['String']>,
+  dancePhrase?: Maybe<Scalars['Int']>,
   id: Scalars['Int'],
   name?: Maybe<Scalars['String']>,
   public_id_prefix: Scalars['String'],
@@ -127,11 +129,13 @@ export type Choreo_Arr_Rel_Insert_Input = {
 /** aggregate avg on columns */
 export type Choreo_Avg_Fields = {
   __typename?: 'choreo_avg_fields',
+  dancePhrase?: Maybe<Scalars['Float']>,
   id?: Maybe<Scalars['Float']>,
 };
 
 /** order by avg() on columns of table "choreo" */
 export type Choreo_Avg_Order_By = {
+  dancePhrase?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
 };
 
@@ -140,6 +144,8 @@ export type Choreo_Bool_Exp = {
   _and?: Maybe<Array<Maybe<Choreo_Bool_Exp>>>,
   _not?: Maybe<Choreo_Bool_Exp>,
   _or?: Maybe<Array<Maybe<Choreo_Bool_Exp>>>,
+  danceName?: Maybe<Text_Comparison_Exp>,
+  dancePhrase?: Maybe<Integer_Comparison_Exp>,
   id?: Maybe<Integer_Comparison_Exp>,
   name?: Maybe<Text_Comparison_Exp>,
   public_id_prefix?: Maybe<Text_Comparison_Exp>,
@@ -155,11 +161,14 @@ export enum Choreo_Constraint {
 
 /** input type for incrementing integer columne in table "choreo" */
 export type Choreo_Inc_Input = {
+  dancePhrase?: Maybe<Scalars['Int']>,
   id?: Maybe<Scalars['Int']>,
 };
 
 /** input type for inserting data into table "choreo" */
 export type Choreo_Insert_Input = {
+  danceName?: Maybe<Scalars['String']>,
+  dancePhrase?: Maybe<Scalars['Int']>,
   id?: Maybe<Scalars['Int']>,
   name?: Maybe<Scalars['String']>,
   public_id_prefix?: Maybe<Scalars['String']>,
@@ -170,6 +179,8 @@ export type Choreo_Insert_Input = {
 /** aggregate max on columns */
 export type Choreo_Max_Fields = {
   __typename?: 'choreo_max_fields',
+  danceName?: Maybe<Scalars['String']>,
+  dancePhrase?: Maybe<Scalars['Int']>,
   id?: Maybe<Scalars['Int']>,
   name?: Maybe<Scalars['String']>,
   public_id_prefix?: Maybe<Scalars['String']>,
@@ -177,6 +188,8 @@ export type Choreo_Max_Fields = {
 
 /** order by max() on columns of table "choreo" */
 export type Choreo_Max_Order_By = {
+  danceName?: Maybe<Order_By>,
+  dancePhrase?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
   name?: Maybe<Order_By>,
   public_id_prefix?: Maybe<Order_By>,
@@ -185,6 +198,8 @@ export type Choreo_Max_Order_By = {
 /** aggregate min on columns */
 export type Choreo_Min_Fields = {
   __typename?: 'choreo_min_fields',
+  danceName?: Maybe<Scalars['String']>,
+  dancePhrase?: Maybe<Scalars['Int']>,
   id?: Maybe<Scalars['Int']>,
   name?: Maybe<Scalars['String']>,
   public_id_prefix?: Maybe<Scalars['String']>,
@@ -192,6 +207,8 @@ export type Choreo_Min_Fields = {
 
 /** order by min() on columns of table "choreo" */
 export type Choreo_Min_Order_By = {
+  danceName?: Maybe<Order_By>,
+  dancePhrase?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
   name?: Maybe<Order_By>,
   public_id_prefix?: Maybe<Order_By>,
@@ -220,6 +237,8 @@ export type Choreo_On_Conflict = {
 
 /** ordering options when selecting data from "choreo" */
 export type Choreo_Order_By = {
+  danceName?: Maybe<Order_By>,
+  dancePhrase?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
   name?: Maybe<Order_By>,
   public_id_prefix?: Maybe<Order_By>,
@@ -230,6 +249,10 @@ export type Choreo_Order_By = {
 /** select columns of table "choreo" */
 export enum Choreo_Select_Column {
   /** column name */
+  DanceName = 'danceName',
+  /** column name */
+  DancePhrase = 'dancePhrase',
+  /** column name */
   Id = 'id',
   /** column name */
   Name = 'name',
@@ -239,6 +262,8 @@ export enum Choreo_Select_Column {
 
 /** input type for updating data in table "choreo" */
 export type Choreo_Set_Input = {
+  danceName?: Maybe<Scalars['String']>,
+  dancePhrase?: Maybe<Scalars['Int']>,
   id?: Maybe<Scalars['Int']>,
   name?: Maybe<Scalars['String']>,
   public_id_prefix?: Maybe<Scalars['String']>,
@@ -247,49 +272,61 @@ export type Choreo_Set_Input = {
 /** aggregate stddev on columns */
 export type Choreo_Stddev_Fields = {
   __typename?: 'choreo_stddev_fields',
+  dancePhrase?: Maybe<Scalars['Float']>,
   id?: Maybe<Scalars['Float']>,
 };
 
 /** order by stddev() on columns of table "choreo" */
 export type Choreo_Stddev_Order_By = {
+  dancePhrase?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
 };
 
 /** aggregate stddev_pop on columns */
 export type Choreo_Stddev_Pop_Fields = {
   __typename?: 'choreo_stddev_pop_fields',
+  dancePhrase?: Maybe<Scalars['Float']>,
   id?: Maybe<Scalars['Float']>,
 };
 
 /** order by stddev_pop() on columns of table "choreo" */
 export type Choreo_Stddev_Pop_Order_By = {
+  dancePhrase?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
 };
 
 /** aggregate stddev_samp on columns */
 export type Choreo_Stddev_Samp_Fields = {
   __typename?: 'choreo_stddev_samp_fields',
+  dancePhrase?: Maybe<Scalars['Float']>,
   id?: Maybe<Scalars['Float']>,
 };
 
 /** order by stddev_samp() on columns of table "choreo" */
 export type Choreo_Stddev_Samp_Order_By = {
+  dancePhrase?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
 };
 
 /** aggregate sum on columns */
 export type Choreo_Sum_Fields = {
   __typename?: 'choreo_sum_fields',
+  dancePhrase?: Maybe<Scalars['Int']>,
   id?: Maybe<Scalars['Int']>,
 };
 
 /** order by sum() on columns of table "choreo" */
 export type Choreo_Sum_Order_By = {
+  dancePhrase?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
 };
 
 /** update columns of table "choreo" */
 export enum Choreo_Update_Column {
+  /** column name */
+  DanceName = 'danceName',
+  /** column name */
+  DancePhrase = 'dancePhrase',
   /** column name */
   Id = 'id',
   /** column name */
@@ -301,33 +338,39 @@ export enum Choreo_Update_Column {
 /** aggregate var_pop on columns */
 export type Choreo_Var_Pop_Fields = {
   __typename?: 'choreo_var_pop_fields',
+  dancePhrase?: Maybe<Scalars['Float']>,
   id?: Maybe<Scalars['Float']>,
 };
 
 /** order by var_pop() on columns of table "choreo" */
 export type Choreo_Var_Pop_Order_By = {
+  dancePhrase?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
 };
 
 /** aggregate var_samp on columns */
 export type Choreo_Var_Samp_Fields = {
   __typename?: 'choreo_var_samp_fields',
+  dancePhrase?: Maybe<Scalars['Float']>,
   id?: Maybe<Scalars['Float']>,
 };
 
 /** order by var_samp() on columns of table "choreo" */
 export type Choreo_Var_Samp_Order_By = {
+  dancePhrase?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
 };
 
 /** aggregate variance on columns */
 export type Choreo_Variance_Fields = {
   __typename?: 'choreo_variance_fields',
+  dancePhrase?: Maybe<Scalars['Float']>,
   id?: Maybe<Scalars['Float']>,
 };
 
 /** order by variance() on columns of table "choreo" */
 export type Choreo_Variance_Order_By = {
+  dancePhrase?: Maybe<Order_By>,
   id?: Maybe<Order_By>,
 };
 
@@ -1417,6 +1460,24 @@ export type UpdateChoreoNameMutation = (
   )> }
 );
 
+export type UpdateChoreoDanceMutationVariables = {
+  choreoId: Scalars['Int'],
+  danceName: Scalars['String'],
+  dancePhrase: Scalars['Int']
+};
+
+
+export type UpdateChoreoDanceMutation = (
+  { __typename?: 'mutation_root' }
+  & { update_choreo: Maybe<(
+    { __typename?: 'choreo_mutation_response' }
+    & { returning: Array<(
+      { __typename?: 'choreo' }
+      & Pick<Choreo, 'id'>
+    )> }
+  )> }
+);
+
 export type StepsQueryVariables = {
   id: Scalars['Int'],
   prefix: Scalars['String']
@@ -1427,7 +1488,7 @@ export type StepsQuery = (
   { __typename?: 'query_root' }
   & { choreo: Array<(
     { __typename?: 'choreo' }
-    & Pick<Choreo, 'name'>
+    & Pick<Choreo, 'name' | 'danceName' | 'dancePhrase'>
     & { steps: Array<(
       { __typename?: 'step' }
       & Pick<Step, 'comment' | 'timing'>
@@ -1520,10 +1581,46 @@ export function withUpdateChoreoName<TProps, TChildProps = {}>(operationOptions?
 export type UpdateChoreoNameMutationHookResult = ReturnType<typeof useUpdateChoreoNameMutation>;
 export type UpdateChoreoNameMutationResult = ApolloReactCommon.MutationResult<UpdateChoreoNameMutation>;
 export type UpdateChoreoNameMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateChoreoNameMutation, UpdateChoreoNameMutationVariables>;
+export const UpdateChoreoDanceDocument = gql`
+    mutation updateChoreoDance($choreoId: Int!, $danceName: String!, $dancePhrase: Int!) {
+  update_choreo(where: {id: {_eq: $choreoId}}, _set: {danceName: $danceName, dancePhrase: $dancePhrase}) {
+    returning {
+      id
+    }
+  }
+}
+    `;
+export type UpdateChoreoDanceMutationFn = ApolloReactCommon.MutationFunction<UpdateChoreoDanceMutation, UpdateChoreoDanceMutationVariables>;
+export type UpdateChoreoDanceComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<UpdateChoreoDanceMutation, UpdateChoreoDanceMutationVariables>, 'mutation'>;
+
+    export const UpdateChoreoDanceComponent = (props: UpdateChoreoDanceComponentProps) => (
+      <ApolloReactComponents.Mutation<UpdateChoreoDanceMutation, UpdateChoreoDanceMutationVariables> mutation={UpdateChoreoDanceDocument} {...props} />
+    );
+    
+export type UpdateChoreoDanceProps<TChildProps = {}> = ApolloReactHoc.MutateProps<UpdateChoreoDanceMutation, UpdateChoreoDanceMutationVariables> & TChildProps;
+export function withUpdateChoreoDance<TProps, TChildProps = {}>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  UpdateChoreoDanceMutation,
+  UpdateChoreoDanceMutationVariables,
+  UpdateChoreoDanceProps<TChildProps>>) {
+    return ApolloReactHoc.withMutation<TProps, UpdateChoreoDanceMutation, UpdateChoreoDanceMutationVariables, UpdateChoreoDanceProps<TChildProps>>(UpdateChoreoDanceDocument, {
+      alias: 'withUpdateChoreoDance',
+      ...operationOptions
+    });
+};
+
+    export function useUpdateChoreoDanceMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateChoreoDanceMutation, UpdateChoreoDanceMutationVariables>) {
+      return ApolloReactHooks.useMutation<UpdateChoreoDanceMutation, UpdateChoreoDanceMutationVariables>(UpdateChoreoDanceDocument, baseOptions);
+    };
+export type UpdateChoreoDanceMutationHookResult = ReturnType<typeof useUpdateChoreoDanceMutation>;
+export type UpdateChoreoDanceMutationResult = ApolloReactCommon.MutationResult<UpdateChoreoDanceMutation>;
+export type UpdateChoreoDanceMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateChoreoDanceMutation, UpdateChoreoDanceMutationVariables>;
 export const StepsDocument = gql`
     query steps($id: Int!, $prefix: String!) {
   choreo(where: {id: {_eq: $id}, public_id_prefix: {_eq: $prefix}}) {
     name
+    danceName
+    dancePhrase
     steps {
       comment
       timing

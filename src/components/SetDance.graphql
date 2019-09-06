@@ -1,0 +1,14 @@
+mutation updateChoreoDance(
+  $choreoId: Int!
+  $danceName: String!
+  $dancePhrase: Int!
+) {
+  update_choreo(
+    where: { id: { _eq: $choreoId } }
+    _set: { danceName: $danceName, dancePhrase: $dancePhrase }
+  ) {
+    returning {
+      id
+    }
+  }
+}
