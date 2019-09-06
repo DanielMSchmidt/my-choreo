@@ -4,6 +4,7 @@ import { StepsComponent } from "../graphql";
 import { Timing, lengthToTiming } from "../types/timing";
 
 import "./ChoreoTest.css";
+import Header from "../components/Header";
 
 interface Step {
   timing: number;
@@ -91,26 +92,31 @@ export default function ChoreoTest({
   }
 
   return (
-    <StepsComponent skip={false} variables={{ id, prefix }}>
-      {({ loading, data }) => {
-        if (loading || !data || !data.choreo.length) {
-          return <Loading />;
-        }
+    <>
+      <StepsComponent skip={false} variables={{ id, prefix }}>
+        {({ loading, data }) => {
+          if (loading || !data || !data.choreo.length) {
+            return <Loading />;
+          }
 
-        const { steps } = data.choreo[0];
+          const { steps, name } = data.choreo[0];
 
-        return (
-          <ChoreoTester
-            steps={steps.map((step, index) =>
-              lengthToTiming(
-                index === 0
-                  ? step.timing
-                  : step.timing - steps[index - 1].timing
-              )
-            )}
-          />
-        );
-      }}
-    </StepsComponent>
+          return (
+            <>
+              <Header>{name || "My Choreo"}</Header>
+              <ChoreoTester
+                steps={steps.map((step, index) =>
+                  lengthToTiming(
+                    index === 0
+                      ? step.timing
+                      : step.timing - steps[index - 1].timing
+                  )
+                )}
+              />
+            </>
+          );
+        }}
+      </StepsComponent>
+    </>
   );
 }

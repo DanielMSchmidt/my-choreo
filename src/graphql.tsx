@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
-import * as React from 'react';
 import * as ApolloReactCommon from '@apollo/react-common';
+import * as React from 'react';
 import * as ApolloReactComponents from '@apollo/react-components';
 import * as ApolloReactHoc from '@apollo/react-hoc';
 import * as ApolloReactHooks from '@apollo/react-hooks';
@@ -1400,6 +1400,23 @@ export type Timestamptz_Comparison_Exp = {
   _neq?: Maybe<Scalars['timestamptz']>,
   _nin?: Maybe<Array<Scalars['timestamptz']>>,
 };
+export type UpdateChoreoNameMutationVariables = {
+  choreoId: Scalars['Int'],
+  name: Scalars['String']
+};
+
+
+export type UpdateChoreoNameMutation = (
+  { __typename?: 'mutation_root' }
+  & { update_choreo: Maybe<(
+    { __typename?: 'choreo_mutation_response' }
+    & { returning: Array<(
+      { __typename?: 'choreo' }
+      & Pick<Choreo, 'id'>
+    )> }
+  )> }
+);
+
 export type StepsQueryVariables = {
   id: Scalars['Int'],
   prefix: Scalars['String']
@@ -1469,6 +1486,40 @@ export type CreateChoreoMutation = (
   )> }
 );
 
+export const UpdateChoreoNameDocument = gql`
+    mutation updateChoreoName($choreoId: Int!, $name: String!) {
+  update_choreo(where: {id: {_eq: $choreoId}}, _set: {name: $name}) {
+    returning {
+      id
+    }
+  }
+}
+    `;
+export type UpdateChoreoNameMutationFn = ApolloReactCommon.MutationFunction<UpdateChoreoNameMutation, UpdateChoreoNameMutationVariables>;
+export type UpdateChoreoNameComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<UpdateChoreoNameMutation, UpdateChoreoNameMutationVariables>, 'mutation'>;
+
+    export const UpdateChoreoNameComponent = (props: UpdateChoreoNameComponentProps) => (
+      <ApolloReactComponents.Mutation<UpdateChoreoNameMutation, UpdateChoreoNameMutationVariables> mutation={UpdateChoreoNameDocument} {...props} />
+    );
+    
+export type UpdateChoreoNameProps<TChildProps = {}> = ApolloReactHoc.MutateProps<UpdateChoreoNameMutation, UpdateChoreoNameMutationVariables> & TChildProps;
+export function withUpdateChoreoName<TProps, TChildProps = {}>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  UpdateChoreoNameMutation,
+  UpdateChoreoNameMutationVariables,
+  UpdateChoreoNameProps<TChildProps>>) {
+    return ApolloReactHoc.withMutation<TProps, UpdateChoreoNameMutation, UpdateChoreoNameMutationVariables, UpdateChoreoNameProps<TChildProps>>(UpdateChoreoNameDocument, {
+      alias: 'withUpdateChoreoName',
+      ...operationOptions
+    });
+};
+
+    export function useUpdateChoreoNameMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateChoreoNameMutation, UpdateChoreoNameMutationVariables>) {
+      return ApolloReactHooks.useMutation<UpdateChoreoNameMutation, UpdateChoreoNameMutationVariables>(UpdateChoreoNameDocument, baseOptions);
+    };
+export type UpdateChoreoNameMutationHookResult = ReturnType<typeof useUpdateChoreoNameMutation>;
+export type UpdateChoreoNameMutationResult = ApolloReactCommon.MutationResult<UpdateChoreoNameMutation>;
+export type UpdateChoreoNameMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateChoreoNameMutation, UpdateChoreoNameMutationVariables>;
 export const StepsDocument = gql`
     query steps($id: Int!, $prefix: String!) {
   choreo(where: {id: {_eq: $id}, public_id_prefix: {_eq: $prefix}}) {
@@ -1581,7 +1632,7 @@ export type AddFigureMutationResult = ApolloReactCommon.MutationResult<AddFigure
 export type AddFigureMutationOptions = ApolloReactCommon.BaseMutationOptions<AddFigureMutation, AddFigureMutationVariables>;
 export const CreateChoreoDocument = gql`
     mutation CreateChoreo($publicId: String!) {
-  insert_choreo(objects: {public_id_prefix: $publicId}) {
+  insert_choreo(objects: {public_id_prefix: $publicId, name: "My Choreo - Click here to edit"}) {
     returning {
       id
       public_id_prefix

@@ -15,10 +15,6 @@ const App: React.FC = () => {
   return (
     <ApolloProvider client={client}>
       <div className="App">
-        <header className="App-header">
-          <h1>My Choreo</h1>
-        </header>
-
         <Router>
           <CreateChoreoRedirect path="/" />
           <ChoreoEditor path="/choreo/:prefix/:id" />

@@ -1,5 +1,10 @@
 mutation CreateChoreo($publicId: String!) {
-  insert_choreo(objects: { public_id_prefix: $publicId }) {
+  insert_choreo(
+    objects: {
+      public_id_prefix: $publicId
+      name: "My Choreo - Click here to edit"
+    }
+  ) {
     returning {
       id
       public_id_prefix

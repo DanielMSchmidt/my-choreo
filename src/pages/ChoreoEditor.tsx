@@ -12,6 +12,8 @@ import {
 import "./ChoreoEditor.css";
 import { lengthToTiming, Timing, timingToLength } from "../types/timing";
 import { Button } from "../components/Button";
+import Header from "../components/Header";
+import EditableHeader from "../components/EditableHeader";
 
 const randomColor = () =>
   "#" + Math.round(0xffffff * Math.random()).toString(16);
@@ -246,22 +248,39 @@ export default function Choreo({
       <StepsComponent skip={false} variables={{ id, prefix }}>
         {({ loading, data, refetch }) => {
           if (loading || !data || !data.choreo.length) {
-            return <Loading />;
+            return (
+              <>
+                <Header>My Choreo</Header>
+
+                <Loading />
+              </>
+            );
           }
 
           const choreo = data.choreo[0];
           return (
-            <ChoreoEditor
-              refetch={() => refetch()}
-              steps={choreo.steps}
-              tags={choreo.tags}
-              choreoId={id}
-            />
+            <>
+              <EditableHeader
+                choreoId={id}
+                currentName={choreo.name || "My Choreo"}
+              />
+              <ChoreoEditor
+                refetch={() => refetch()}
+                steps={choreo.steps}
+                tags={choreo.tags}
+                choreoId={id}
+              />
+            </>
           );
         }}
       </StepsComponent>
     );
   }
 
-  return <Loading />;
+  return (
+    <>
+      <Header>My Choreo</Header>
+      <Loading />
+    </>
+  );
 }

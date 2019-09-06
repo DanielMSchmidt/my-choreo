@@ -1,0 +1,7 @@
+mutation updateChoreoName($choreoId: Int!, $name: String!) {
+  update_choreo(where: { id: { _eq: $choreoId } }, _set: { name: $name }) {
+    returning {
+      id
+    }
+  }
+}
