@@ -76,17 +76,21 @@ function StepEditor({
 function NewStep({
   previousTiming,
   choreoId,
-  refetch
+  refetch,
+  onStepAdded
 }: {
   previousTiming: number;
   choreoId: number;
   refetch: () => void;
+  onStepAdded: () => void;
 }) {
   const [addStep] = useAddStepMutation();
   const createNewStep = (timing: Timing) => {
     addStep({
       variables: { choreoId, timing: timingToLength(timing) + previousTiming }
-    }).then(refetch);
+    })
+      .then(refetch)
+      .then(onStepAdded);
   };
 
   return (
@@ -140,6 +144,7 @@ function ChoreoEditor({
   choreoId: number;
   refetch: () => void;
 }) {
+  const editorRef = React.useRef<React.RefObject<HTMLDivElement>>(null);
   const [addFigure] = useAddFigureMutation();
   const [createFigureMode, setCreateFigure] = React.useState(false);
   const [figureStart, setFigureStart] = React.useState<number | null>(null);
@@ -150,6 +155,14 @@ function ChoreoEditor({
     setFigureStart(null);
   };
 
+  const onStepAdded = () => {
+    if (editorRef && editorRef.current) {
+      // Move as right as possible to the newest element
+      // @ts-ignore
+      editorRef.current.scrollTo(1000000, 0);
+    }
+  };
+
   return (
     <>
       <div className="actions">
@@ -157,6 +170,7 @@ function ChoreoEditor({
           previousTiming={steps.length ? steps[steps.length - 1].timing : 0}
           choreoId={choreoId}
           refetch={refetch}
+          onStepAdded={onStepAdded}
         />
 
         <TagFigure
@@ -166,7 +180,7 @@ function ChoreoEditor({
         />
       </div>
 
-      <div className="choreoEditor">
+      <div ref={editorRef as any} className="choreoEditor">
         {steps.map((step, index) => (
           <div
             key={step.timing}
