@@ -31,3 +31,16 @@ export function lengthToTiming(stepLength: number): Timing {
       throw new Error("Could not find step length: " + stepLength);
   }
 }
+
+export function isTiming(timing: unknown): timing is Timing {
+  return (
+    timing &&
+    typeof timing === "string" &&
+    [
+      Timing.And.toString(),
+      Timing.E.toString(),
+      Timing.Quick.toString(),
+      Timing.Slow.toString()
+    ].includes(timing)
+  );
+}

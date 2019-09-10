@@ -5,21 +5,22 @@ query steps($id: Int!, $prefix: String!) {
     dancePhrase
 
     steps {
+      id
       comment
       timing
     }
     tags {
       color
       content
-      timing_end
-      timing_start
+      step_end
+      step_start
       title
       type
     }
   }
 }
 
-mutation addStep($choreoId: Int!, $timing: numeric!) {
+mutation addStep($choreoId: Int!, $timing: String!) {
   insert_step(objects: { choreo_id: $choreoId, timing: $timing }) {
     affected_rows
   }
@@ -27,8 +28,8 @@ mutation addStep($choreoId: Int!, $timing: numeric!) {
 
 mutation addFigure(
   $choreoId: Int!
-  $timing_start: numeric!
-  $timing_end: numeric!
+  $step_start: Int!
+  $step_end: Int!
   $title: String!
   $content: String!
   $color: String!
@@ -40,8 +41,8 @@ mutation addFigure(
       choreo_id: $choreoId
       title: $title
       type: "Figure"
-      timing_start: $timing_start
-      timing_end: $timing_end
+      step_start: $step_start
+      step_end: $step_end
     }
   ) {
     affected_rows

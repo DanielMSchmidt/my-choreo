@@ -10,7 +10,12 @@ import {
 } from "../graphql";
 
 import "./ChoreoEditor.css";
-import { lengthToTiming, Timing, timingToLength } from "../types/timing";
+import {
+  lengthToTiming,
+  Timing,
+  timingToLength,
+  isTiming
+} from "../types/timing";
 import { Button } from "../components/Button";
 import Header from "../components/Header";
 import EditableHeader from "../components/EditableHeader";
@@ -20,23 +25,20 @@ const randomColor = () =>
   "#" + Math.round(0xffffff * Math.random()).toString(16);
 
 type Step = {
+  id: number;
   comment?: string | null;
-  timing: number;
+  timing: Timing;
 };
 
 type Tag = {
   type: string;
   title: string;
   color: string;
-  timing_start: number;
-  timing_end: number;
+  step_start: number;
+  step_end: number;
 };
 
-function StepEditor({
-  timing,
-  previousTiming,
-  figure
-}: Step & { previousTiming: number | null; figure?: Tag }) {
+function StepEditor({ timing, figure }: Step & { figure?: Tag }) {
   // TODO: add rhythm properly
   // const rhythm = 8;
 
@@ -63,11 +65,7 @@ function StepEditor({
           className="stepEditor"
           style={{ backgroundColor: figure ? figure.color : "#FFF" }}
         >
-          <span>
-            {lengthToTiming(
-              timing - (previousTiming === null ? 0 : previousTiming)
-            )}
-          </span>
+          <span>{timing}</span>
           {/* {" / "}
       <span>{timing % rhythm}</span> */}
         </div>
@@ -77,12 +75,10 @@ function StepEditor({
 }
 
 function NewStep({
-  previousTiming,
   choreoId,
   refetch,
   onStepAdded
 }: {
-  previousTiming: number;
   choreoId: number;
   refetch: () => void;
   onStepAdded: () => void;
@@ -90,7 +86,7 @@ function NewStep({
   const [addStep] = useAddStepMutation();
   const createNewStep = (timing: Timing) => {
     addStep({
-      variables: { choreoId, timing: timingToLength(timing) + previousTiming }
+      variables: { choreoId, timing: timing }
     })
       .then(refetch)
       .then(onStepAdded);
@@ -184,7 +180,6 @@ function ChoreoEditor({
         />
 
         <NewStep
-          previousTiming={steps.length ? steps[steps.length - 1].timing : 0}
           choreoId={choreoId}
           refetch={refetch}
           onStepAdded={onStepAdded}
@@ -204,7 +199,7 @@ function ChoreoEditor({
             onClick={
               createFigureMode
                 ? figureStart === null
-                  ? () => setFigureStart(step.timing)
+                  ? () => setFigureStart(step.id)
                   : () => {
                       const name = prompt("How is this figure called?");
                       if (!figureStart || !name) {
@@ -217,8 +212,8 @@ function ChoreoEditor({
                           color: randomColor(),
                           content: "",
                           title: name,
-                          timing_end: step.timing,
-                          timing_start: figureStart
+                          step_end: step.id,
+                          step_start: figureStart
                         }
                       }).then(() => {
                         setCreateFigure(false);
@@ -233,11 +228,8 @@ function ChoreoEditor({
               key={step.timing}
               {...step}
               figure={figures.find(
-                tag =>
-                  tag.timing_start <= step.timing &&
-                  step.timing <= tag.timing_end
+                tag => tag.step_start <= step.id && step.id <= tag.step_end
               )}
-              previousTiming={index === 0 ? null : steps[index - 1].timing}
             />
           </div>
         ))}
@@ -281,7 +273,9 @@ export default function Choreo({
               />
               <ChoreoEditor
                 refetch={() => refetch()}
-                steps={choreo.steps}
+                steps={
+                  choreo.steps.filter(step => isTiming(step.timing)) as any
+                }
                 danceName={choreo.danceName || "Waltz"}
                 tags={choreo.tags}
                 choreoId={id}
