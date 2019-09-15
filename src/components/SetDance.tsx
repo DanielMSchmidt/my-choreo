@@ -34,13 +34,13 @@ export default function SetDance({
 
   return (
     <>
-      <select className="set-dance" onChange={onSelect}>
+      <select
+        value={initialDanceName}
+        className="set-dance"
+        onChange={onSelect}
+      >
         {availableDances.map(dance => (
-          <option
-            selected={initialDanceName === dance.name}
-            key={dance.name}
-            value={dance.name}
-          >
+          <option key={dance.name} value={dance.name}>
             {dance.name}
           </option>
         ))}

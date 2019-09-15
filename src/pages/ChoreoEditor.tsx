@@ -11,10 +11,10 @@ import {
 
 import "./ChoreoEditor.css";
 import {
-  lengthToTiming,
   Timing,
+  isTiming,
   timingToLength,
-  isTiming
+  timingsToNumber
 } from "../types/timing";
 import { Button } from "../components/Button";
 import Header from "../components/Header";
@@ -38,10 +38,11 @@ type Tag = {
   step_end: number;
 };
 
-function StepEditor({ timing, figure }: Step & { figure?: Tag }) {
-  // TODO: add rhythm properly
-  // const rhythm = 8;
-
+function StepEditor({
+  timing,
+  figure,
+  timingNumber
+}: Step & { figure?: Tag; timingNumber: number }) {
   return (
     <TooltipTrigger
       placement="top"
@@ -66,8 +67,8 @@ function StepEditor({ timing, figure }: Step & { figure?: Tag }) {
           style={{ backgroundColor: figure ? figure.color : "#FFF" }}
         >
           <span>{timing}</span>
-          {/* {" / "}
-      <span>{timing % rhythm}</span> */}
+          {" / "}
+          <span>{timingNumber}</span>
         </div>
       )}
     </TooltipTrigger>
@@ -164,6 +165,8 @@ function ChoreoEditor({
     }
   };
 
+  const timingNumbers = timingsToNumber(steps.map(step => step.timing));
+
   return (
     <>
       <div className="actions">
@@ -227,6 +230,7 @@ function ChoreoEditor({
             <StepEditor
               key={step.timing}
               {...step}
+              timingNumber={timingNumbers[index]}
               figure={figures.find(
                 tag => tag.step_start <= step.id && step.id <= tag.step_end
               )}

@@ -44,3 +44,48 @@ export function isTiming(timing: unknown): timing is Timing {
     ].includes(timing)
   );
 }
+
+function previousFullBeatsIndex(timings: number[]) {
+  for (let i = timings.length - 1; i >= 0; i--) {
+    if (timings[i] % 1 !== 0) {
+      return i;
+    }
+  }
+
+  return -1;
+}
+
+export function timingsToNumber(timings: Timing[]): number[] {
+  return [
+    1,
+    ...timings.reduce(
+      (carry, timing) => {
+        const lastStepTiming = carry.length ? carry[carry.length - 1] : 1;
+
+        if (timing === Timing.Quick || timing === Timing.Slow) {
+          return [...carry, lastStepTiming + timingToLength(timing)];
+        }
+
+        console.log({ carry, timing });
+
+        // These timings borrow time from the step(s) before
+        const lastStep = carry.pop();
+        console.log({ lastStep });
+        if (!lastStep) {
+          // TODO: not supported yet
+          return [];
+        }
+
+        const prevoiousFullBeat = previousFullBeatsIndex(carry);
+        console.log({ prevoiousFullBeat });
+        const untouched = carry.slice(0, prevoiousFullBeat);
+        const currentBeat = carry.slice(prevoiousFullBeat + 1);
+
+        console.log({ untouched, currentBeat });
+
+        return [...carry, lastStepTiming - timingToLength(timing), lastStep];
+      },
+      [] as number[]
+    )
+  ];
+}
