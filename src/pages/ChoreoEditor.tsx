@@ -38,7 +38,7 @@ type Tag = {
   step_end: number;
 };
 
-function StepEditor({ timing, figure }: Step & { figure?: Tag }) {
+function StepEditor({ timing, figure, id }: Step & { figure?: Tag }) {
   // TODO: add rhythm properly
   // const rhythm = 8;
 
@@ -63,6 +63,7 @@ function StepEditor({ timing, figure }: Step & { figure?: Tag }) {
             ref: triggerRef
           })}
           className="stepEditor"
+          id={`step-${id}`}
           style={{ backgroundColor: figure ? figure.color : "#FFF" }}
         >
           <span>{timing}</span>
@@ -193,46 +194,48 @@ function ChoreoEditor({
       </div>
 
       <div ref={editorRef as any} className="choreoEditor">
-        {steps.map((step, index) => (
-          <div
-            key={step.timing}
-            onClick={
-              createFigureMode
-                ? figureStart === null
-                  ? () => setFigureStart(step.id)
-                  : () => {
-                      const name = prompt("How is this figure called?");
-                      if (!figureStart || !name) {
-                        return;
-                      }
-
-                      addFigure({
-                        variables: {
-                          choreoId,
-                          color: randomColor(),
-                          content: "",
-                          title: name,
-                          step_end: step.id,
-                          step_start: figureStart
-                        }
-                      }).then(() => {
-                        setCreateFigure(false);
-                        setFigureStart(null);
-                        refetch();
-                      });
-                    }
-                : undefined
-            }
-          >
-            <StepEditor
+        {steps
+          .sort((stepA, stepB) => stepA.id - stepB.id)
+          .map((step, index) => (
+            <div
               key={step.timing}
-              {...step}
-              figure={figures.find(
-                tag => tag.step_start <= step.id && step.id <= tag.step_end
-              )}
-            />
-          </div>
-        ))}
+              onClick={
+                createFigureMode
+                  ? figureStart === null
+                    ? () => setFigureStart(step.id)
+                    : () => {
+                        const name = prompt("How is this figure called?");
+                        if (!figureStart || !name) {
+                          return;
+                        }
+
+                        addFigure({
+                          variables: {
+                            choreoId,
+                            color: randomColor(),
+                            content: "",
+                            title: name,
+                            step_end: step.id,
+                            step_start: figureStart
+                          }
+                        }).then(() => {
+                          setCreateFigure(false);
+                          setFigureStart(null);
+                          refetch();
+                        });
+                      }
+                  : undefined
+              }
+            >
+              <StepEditor
+                key={step.timing}
+                {...step}
+                figure={figures.find(
+                  tag => tag.step_start <= step.id && step.id <= tag.step_end
+                )}
+              />
+            </div>
+          ))}
       </div>
 
       <div>
