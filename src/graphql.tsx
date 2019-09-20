@@ -1657,7 +1657,7 @@ export type UpdateChoreoDanceMutationResult = ApolloReactCommon.MutationResult<U
 export type UpdateChoreoDanceMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateChoreoDanceMutation, UpdateChoreoDanceMutationVariables>;
 export const StepsDocument = gql`
     query steps($id: Int!, $prefix: String!) {
-  choreo(where: {id: {_eq: $id}, public_id_prefix: {_eq: $prefix}}) {
+  choreo(where: {id: {_eq: $id}, public_id_prefix: {_eq: $prefix}}, order_by: {id: asc}) {
     name
     danceName
     dancePhrase
