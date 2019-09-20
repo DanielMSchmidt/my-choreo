@@ -21,8 +21,16 @@ import Header from "../components/Header";
 import EditableHeader from "../components/EditableHeader";
 import SetDance from "../components/SetDance";
 
-const randomColor = () =>
-  "#" + Math.round(0xffffff * Math.random()).toString(16);
+function sanitizeColor(color: string): string {
+  return color.length === 7 ? color : color + "0";
+}
+
+const randomColor = () => {
+  const number = Math.round(0xffffff * Math.random());
+  const zerosToAdd = 6 - number.toString(16).length;
+
+  return "#" + (number * Math.pow(10, zerosToAdd)).toString(16);
+};
 
 type Step = {
   id: number;
@@ -64,7 +72,9 @@ function StepEditor({ timing, figure, id }: Step & { figure?: Tag }) {
           })}
           className="stepEditor"
           id={`step-${id}`}
-          style={{ backgroundColor: figure ? figure.color : "#FFF" }}
+          style={{
+            backgroundColor: figure ? sanitizeColor(figure.color) : "#FFF"
+          }}
         >
           <span>{timing}</span>
           {/* {" / "}
