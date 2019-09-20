@@ -198,7 +198,7 @@ function ChoreoEditor({
           .sort((stepA, stepB) => stepA.id - stepB.id)
           .map((step, index) => (
             <div
-              key={step.timing}
+              key={step.id}
               onClick={
                 createFigureMode
                   ? figureStart === null
