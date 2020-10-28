@@ -4,9 +4,9 @@
   "private": true,
   "dependencies": {
     "@apollo/react-common": "3.0.1",
-    "@apollo/react-components": "3.0.1",
-    "@apollo/react-hoc": "3.0.1",
-    "@apollo/react-hooks": "3.0.1",
+    "@apollo/react-components": "4.0.0",
+    "@apollo/react-hoc": "4.0.0",
+    "@apollo/react-hooks": "4.0.0",
     "@graphql-codegen/cli": "1.6.1",
     "@graphql-codegen/typescript-operations": "1.6.1",
     "@reach/router": "1.2.1",
