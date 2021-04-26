@@ -29,7 +29,7 @@
     "react-dom": "16.9.0",
     "react-hint": "^3.2.0",
     "react-popper-tooltip": "^2.8.3",
-    "react-scripts": "3.1.1",
+    "react-scripts": "4.0.3",
     "react-tooltip": "^3.10.0",
     "subscriptions-transport-ws": "0.9.16",
     "typescript": "3.5.3"
