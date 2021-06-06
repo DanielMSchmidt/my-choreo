@@ -58,8 +58,8 @@
   },
   "devDependencies": {
     "@graphql-codegen/typescript": "1.6.1",
-    "@graphql-codegen/typescript-react-apollo": "1.6.1",
-    "@graphql-codegen/fragment-matcher": "1.6.1",
+    "@graphql-codegen/typescript-react-apollo": "2.2.5",
+    "@graphql-codegen/fragment-matcher": "2.0.1",
     "@graphql-codegen/introspection": "1.6.1"
   }
 }
